@@ -4,8 +4,10 @@ WORKDIR /usr/src/app
 
 ENV DISCOURSE_VERSION 1.5.2
 
-RUN curl --silent --location https://deb.nodesource.com/setup_4.x | sudo bash -
-RUN apt-get update && apt-get install -yqq --no-install-recommends \
+RUN curl --silent --location https://deb.nodesource.com/setup_4.x | bash -
+
+# The above will do an apt-get update
+RUN apt-get install -yqq --no-install-recommends \
     libxml2 \
     nodejs \
     npm install uglify-js -g \
