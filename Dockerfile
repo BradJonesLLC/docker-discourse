@@ -10,11 +10,17 @@ RUN curl --silent --location https://deb.nodesource.com/setup_4.x | bash -
 RUN apt-get install -yqq --no-install-recommends \
     libxml2 \
     nodejs \
-    npm install uglify-js -g \
+    wget \
+    && npm install uglify-js -g \
     && npm install svgo -g \
     && apt-get install -yqq --no-install-recommends \
     advancecomp jhead jpegoptim libjpeg-turbo-progs optipng
     && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir /jemalloc && cd /jemalloc &&\
+    wget http://www.canonware.com/download/jemalloc/jemalloc-3.6.0.tar.bz2 &&\
+    tar -xjf jemalloc-3.6.0.tar.bz2 && cd jemalloc-3.6.0 && ./configure && make &&\
+    mv lib/libjemalloc.so.1 /usr/lib && cd / && rm -rf /jemalloc
 
 ADD install-imagemagick /tmp/install-imagemagick
 RUN /tmp/install-imagemagick
