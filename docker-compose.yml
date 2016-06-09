@@ -1,0 +1,33 @@
+app:
+  environment:
+    DISCOURSE_HOSTNAME: forum.your.org
+    DISCOURSE_SMTP_ADDRESS: smtp.sendgrid.net
+    DISCOURSE_SMTP_PORT: '587'
+    DISCOURSE_SMTP_USER_NAME: smtpuser
+    DISCOURSE_SMTP_PASSWORD: password
+    DISCOURSE_DEVELOPER_EMAILS: hostmaster@your.domain
+    DISCOURSE_DB_PASSWORD: d15c0ur53
+  tty: true
+  build: .
+  stdin_open: true
+  ports:
+    - "8080:80"
+  links:
+    - postgres
+    - redis
+redis:
+  tty: true
+  image: redis:3.2
+  stdin_open: true
+postgres:
+  environment:
+    POSTGRES_PASSWORD: d15c0ur53
+    POSTGRES_USER: discourse
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label: mounts.brjllc=true
+  tty: true
+  image: postgres:9.4
+  stdin_open: true
+  volumes:
+    - discourse_data:/var/lib/postgresql/data

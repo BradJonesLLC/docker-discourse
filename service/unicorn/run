@@ -1,0 +1,21 @@
+#!/bin/bash
+exec 2>&1
+
+if [[ ! -d /shared/log/rails ]]; then
+  mkdir -p /shared/log/rails
+  chown -R discourse:www-data /shared/log/rails
+fi
+if [[ ! -d /shared/uploads ]]; then
+  mkdir -p /shared/uploads
+  chown -R discourse:www-data /shared/uploads
+fi
+if [[ ! -d /shared/backups ]]; then
+  mkdir -p /shared/backups
+  chown -R discourse:www-data /shared/backups
+fi
+
+cd /var/www/discourse
+chown -R discourse:www-data /shared/log/rails
+LD_PRELOAD=/usr/lib/libjemalloc.so.1 HOME=/home/discourse USER=discourse \
+    exec chpst -u discourse:www-data -U discourse:www-data \
+    bundle exec config/unicorn_launcher -E production -c config/unicorn.conf.rb

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+env > ~/boot_env
+conf=/var/www/discourse/config/discourse.conf
+
+# find DISCOURSE_ env vars, strip the leader, lowercase the key
+/usr/local/bin/ruby -e 'ENV.each{|k,v| puts "#{$1.downcase} = #{v}" if k =~ /^DISCOURSE_(.*)/}' > $conf
+
+[ ! -z "$COMPRESS_BROTLI" ] && sed -i "s/. brotli/  brotli/" /etc/nginx/conf.d/discourse.conf || sed -i "s/. brotli/# brotli/" /etc/nginx/conf.d/discourse.conf
+
+mkdir -p /var/log/nginx
+chgrp -R www-data /var/log/nginx
+chgrp www-data /var/log/nginx
+
+exec 2>&1
+exec /usr/sbin/nginx
