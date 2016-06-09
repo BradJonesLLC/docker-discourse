@@ -12,5 +12,8 @@ mkdir -p /var/log/nginx
 chgrp -R www-data /var/log/nginx
 chgrp www-data /var/log/nginx
 
+chown -R discourse /var/www/discourse
+chown -R discourse:www-data /shared/log/rails /shared/uploads /shared/backups
+
 exec 2>&1
 exec /usr/sbin/nginx

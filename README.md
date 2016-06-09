@@ -32,7 +32,7 @@ and regular asset creation are not yet configured; to bootstrap the application
 for the first time, run:
 
 ```
-docker-compose run app rake db:migrate assets:precompile
+docker-compose run -u discourse app rake db:migrate assets:precompile
 ```
 
 In production, you will want to mount `/shared` in the `app` container for data permanence.

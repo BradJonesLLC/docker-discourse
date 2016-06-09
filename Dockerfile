@@ -60,8 +60,7 @@ RUN cd $HOMEDIR \
 	&& bash -c "ln    -s           /shared/log/rails/{production,production_errors,unicorn.stdout,unicorn.stderr}.log $HOMEDIR/log" \
 	&& bash -c "mkdir -p           /shared/{uploads,backups}" \
 	&& bash -c "ln    -s           /shared/{uploads,backups} $HOMEDIR/public" \
-	&& chown -R discourse . \
-	&& chown -R discourse:www-data /shared/log/rails /shared/uploads /shared/backups
+	&& chown -R discourse .
 
 COPY nginx.conf /etc/nginx/conf.d/discourse.conf
 
