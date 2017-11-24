@@ -17,7 +17,7 @@ RUN apt-get install -yqq --no-install-recommends \
     advancecomp jhead jpegoptim libjpeg-turbo-progs optipng
 
 RUN mkdir /jemalloc && cd /jemalloc \
-    && wget http://www.canonware.com/download/jemalloc/jemalloc-3.6.0.tar.bz2 \
+    && wget https://github.com/jemalloc/jemalloc/releases/download/3.6.0/jemalloc-3.6.0.tar.bz2 \
     && tar -xjf jemalloc-3.6.0.tar.bz2 && cd jemalloc-3.6.0 && ./configure && make \
     && mv lib/libjemalloc.so.1 /usr/lib && cd / && rm -rf /jemalloc
 
